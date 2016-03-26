@@ -238,21 +238,7 @@ class Completer( with_metaclass( abc.ABCMeta, object ) ):
 
 
   def _GetCandidatesFromSubclass( self, request_data ):
-    cache_completions = self._completions_cache.GetCompletionsIfCacheValid(
-          request_data[ 'line_num' ],
-          request_data[ 'start_column' ],
-          self.CompletionType( request_data ) )
-
-    if cache_completions:
-      return cache_completions
-    else:
-      raw_completions = self.ComputeCandidatesInner( request_data )
-      self._completions_cache.Update(
-          request_data[ 'line_num' ],
-          request_data[ 'start_column' ],
-          self.CompletionType( request_data ),
-          raw_completions )
-      return raw_completions
+    return self.ComputeCandidatesInner( request_data )
 
 
   def ComputeCandidatesInner( self, request_data ):
